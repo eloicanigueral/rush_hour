@@ -59,3 +59,9 @@ function mode(type){
     });
 
 }
+
+function reset(){
+    board.innerHTML = '';
+    text.innerText = "Choose the level mode:";
+    board.appendChild(exit);
+}
