@@ -1,1 +1,10 @@
-
+#board{
+    position: relative;
+    width: 360px;
+    height: 360px;
+    background-color: #ddd;
+}
+.car { 
+    position: absolute; 
+    border-radius: 8px; 
+}
