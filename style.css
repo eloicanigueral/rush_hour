@@ -1,24 +1,36 @@
-:root{ --cell-size: 80px; }
+:root{ --cell-size: 80px; --border: 40px}
 
 body{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    margin: 10px; /* how to center it vertically??*/
 }
 
+/* try to draw here the lines of the cells???? */
+/* and i suppouse that the "exit" i should put it in the js file?...  */
 #board{
     position: relative;
     width: calc(var(--cell-size) * 6);
     height: calc(var(--cell-size) * 6);
-    border: 1px solid #000;
+    border: var(--border) solid #000;
     background-color: #ddd;
 }
 .car { 
     position: absolute; 
     border-radius: 8px; 
+    /* padding: 5px; it doesnt work.. but i should add here a padding or something.... */
 }
-
+.exit { /* doesnt work this.... */
+    position: absolute;
+    /* left: calc(var(--cell-size)*6); */
+    /* top: calc(var(--cell-size)*3); */
+    width: var(--border);
+    height: var(--cell-size);
+    background: "blue";
+}
 #buttons{
     margin-top: 20px;
 }
