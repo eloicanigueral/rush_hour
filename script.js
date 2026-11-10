@@ -1,5 +1,5 @@
 const board = document.getElementById('board');
-const CELL_SIZE = 60;
+const CELL_SIZE = 80;
 
 const carsEasy = [
     {row: 2, col: 0, length: 2, horitzontal: true, color: 'red'},

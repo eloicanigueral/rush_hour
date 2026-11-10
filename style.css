@@ -1,10 +1,24 @@
+:root{ --cell-size: 80px; }
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #board{
     position: relative;
-    width: 360px;
-    height: 360px;
+    width: calc(var(--cell-size) * 6);
+    height: calc(var(--cell-size) * 6);
+    border: 1px solid #000;
     background-color: #ddd;
 }
 .car { 
     position: absolute; 
     border-radius: 8px; 
+}
+
+#buttons{
+    margin-top: 20px;
 }
