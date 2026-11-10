@@ -38,32 +38,24 @@ const carsHard = [ //it can be changed... is the model like the example implemen
 ];
 
 
-//i tried to put all the "exit" cod here, but it only works when there's any mode activated
-
+exit = document.createElement('div');
+exit.className = "exit"; //no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...
+board.appendChild(exit); 
 
 function mode(type){
     board.innerHTML = '';
     text.innerText = "Drag the red car trough the exit";
-
-    //dont know if should be like this.... :
-    exit = document.createElement('div');
-    exit.className = "exit"; //i dont know why it doesnt work with the class... i can remove this line and the css....
-    exit.style.left = 6 * CELL_SIZE + 'px';
-    exit.style.top = 2 * CELL_SIZE + 'px';
-    exit.style.width = 40 + 'px'; //40 is the border width
-    exit.style.height = CELL_SIZE + 'px';
-    exit.style.backgroundColor = "blue"; //change the color for the background color: #ddd (now its for viewing it)
-    //upto here, and the last line of the function also
+    board.appendChild(exit);
 
     type.forEach(car => {
         div = document.createElement('div');
         div.className = 'car';
         div.style.left = car.col * CELL_SIZE + 'px';
         div.style.top = car.row * CELL_SIZE + 'px';
-        div.style.width = (car.horitzontal ? car.length : 1) * CELL_SIZE + 'px';
-        div.style.height = (car.horitzontal ? 1 : car.length) * CELL_SIZE + 'px';
+        div.style.width = (car.horitzontal ? car.length : 1) * CELL_SIZE  -4 + 'px';  //the -4 is to ad like a gap between elements.. sure i can put a gap without doing this..., bc it does nothing to the left...
+        div.style.height = (car.horitzontal ? 1 : car.length) * CELL_SIZE -4 + 'px';  //or maybe i can change it in the css adding a border??... not sure
         div.style.backgroundColor = car.color;
         board.appendChild(div);
     });
-    board.appendChild(exit); //this one also
+
 }

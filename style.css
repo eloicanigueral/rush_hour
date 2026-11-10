@@ -23,13 +23,13 @@ body{
     border-radius: 8px; 
     /* padding: 5px; it doesnt work.. but i should add here a padding or something.... */
 }
-.exit { /* doesnt work this.... */
+.exit { /*no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...*/
     position: absolute;
-    /* left: calc(var(--cell-size)*6); */
-    /* top: calc(var(--cell-size)*3); */
+    left: calc(var(--cell-size)*6);
+    top: calc(var(--cell-size)*2);
     width: var(--border);
     height: var(--cell-size);
-    background: "blue";
+    background: blue; /*change the color for the background color: #ddd (now its for viewing it)*/
 }
 #buttons{
     margin-top: 20px;
