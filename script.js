@@ -45,26 +45,33 @@ board.appendChild(exit);
 function mode(type){
     board.innerHTML = '';
     text.innerText = "Drag the red car trough the exit";
-    board.appendChild(exit);
+    board.appendChild(exit); //is the exit on the "border"....
 
-    type.forEach(car => {
-        const div = document.createElement('div');
-        div.className = 'car';
-        div.style.left = car.col * CELL_SIZE + 'px';
-        div.style.top = car.row * CELL_SIZE + 'px';
-        div.style.width = (car.horitzontal ? car.length : 1) * CELL_SIZE  -4 + 'px';  //the -4 is to ad like a gap between elements.. sure i can put a gap without doing this..., bc it does nothing to the left...
-        div.style.height = (car.horitzontal ? 1 : car.length) * CELL_SIZE -4 + 'px';  //or maybe i can change it in the css adding a border??... not sure
-        div.style.backgroundColor = car.color;
+    type.forEach(car => board.appendChild(createCar(car)));
+}
 
-        div.addEventListener('click', () => {
-            selected = div;
-            console.log('Clic al cotxe', car);
-            selected.style.backgroundColor = "black";
-        });
+function createCar(car){
+    const div = document.createElement('div');
+    div.className = 'car'; //not used here, only in the css
 
-        board.appendChild(div);
-    });
+    //positioning the car by its values:
+    div.style.left = car.col * CELL_SIZE + 'px';
+    div.style.top = car.row * CELL_SIZE + 'px';
+    div.style.width = (car.horitzontal ? car.length : 1) * CELL_SIZE  -4 + 'px';  //the -4 is to ad like a gap between elements.. sure i can put a gap without doing this..., bc it does nothing to the left...
+    div.style.height = (car.horitzontal ? 1 : car.length) * CELL_SIZE -4 + 'px';  //or maybe i can change it in the css adding a border??... not sure
+    
+    //"paint" the car:
+    div.style.backgroundColor = car.color;
 
+    div.addEventListener('click', () => selectCar(div, car));
+
+    return div; //if we dont return, the car isn't created
+}
+
+function selectCar(div, car){
+    selected = div;
+    console.log('Clic al cotxe', car);
+    selected.style.backgroundColor = "black";
 }
 
 function reset(){
