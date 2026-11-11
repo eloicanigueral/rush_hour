@@ -65,6 +65,11 @@ function createCar(car){
 
     div.addEventListener('dblclick', () => selectCar(div, car)); //by now quite useless... but its cool
 
+    div.addEventListener('mousedown', () => { //mousedown is like the start of the click...
+        document.addEventListener('mousemove', () => {}); //i dont really know how to do it.. search it
+        document.addEventListener('mouseup', () => {}); //i dont know if div or document
+    });
+
     return div; //if we dont return, the car isn't created
 }
 

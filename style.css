@@ -23,6 +23,7 @@ body{
     position: absolute; 
     border-radius: 8px; 
     /* padding: 5px; it doesnt work.. but i should add here a padding or something.... */
+    user-select: none; /*because before it used to select the buttons.. know it doesn't selct anything*/
 }
 .car:hover { outline: 2px solid #000; cursor: pointer; } /*outline is better than border here, bc it fits in the object size.. not outside*/
 
