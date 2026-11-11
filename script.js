@@ -1,7 +1,7 @@
 const board = document.getElementById('board');
 const text = document.getElementById('text');
 const CELL_SIZE = 80;
-
+var selected = null;
 
 // the color of the cars could be random (without the red)??
 
@@ -48,13 +48,20 @@ function mode(type){
     board.appendChild(exit);
 
     type.forEach(car => {
-        div = document.createElement('div');
+        const div = document.createElement('div');
         div.className = 'car';
         div.style.left = car.col * CELL_SIZE + 'px';
         div.style.top = car.row * CELL_SIZE + 'px';
         div.style.width = (car.horitzontal ? car.length : 1) * CELL_SIZE  -4 + 'px';  //the -4 is to ad like a gap between elements.. sure i can put a gap without doing this..., bc it does nothing to the left...
         div.style.height = (car.horitzontal ? 1 : car.length) * CELL_SIZE -4 + 'px';  //or maybe i can change it in the css adding a border??... not sure
         div.style.backgroundColor = car.color;
+
+        div.addEventListener('click', () => {
+            selected = div;
+            console.log('Clic al cotxe', car);
+            selected.style.backgroundColor = "black";
+        });
+
         board.appendChild(div);
     });
 

@@ -18,11 +18,15 @@ body{
     border: var(--border) solid #000;
     background-color: #ddd;
 }
+
 .car { 
     position: absolute; 
     border-radius: 8px; 
     /* padding: 5px; it doesnt work.. but i should add here a padding or something.... */
 }
+.car:hover { outline: 2px solid #000; cursor: pointer; } /*outline is better than border here, bc it fits in the object size.. not outside*/
+
+
 .exit { /*no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...*/
     position: absolute;
     left: calc(var(--cell-size)*6);
