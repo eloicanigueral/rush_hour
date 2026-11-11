@@ -52,7 +52,7 @@ function mode(type){
 
 function createCar(car){
     const div = document.createElement('div');
-    div.className = 'car'; //not used here, only in the css
+    div.className = 'car'; //not used here in the js, only in the css. The "car"s here are the var entered on the function
 
     //positioning the car by its values:
     div.style.left = car.col * CELL_SIZE + 'px';
@@ -63,7 +63,7 @@ function createCar(car){
     //"paint" the car:
     div.style.backgroundColor = car.color;
 
-    div.addEventListener('click', () => selectCar(div, car)); //by now useless... but its cool
+    div.addEventListener('dblclick', () => selectCar(div, car)); //by now quite useless... but its cool
 
     return div; //if we dont return, the car isn't created
 }
@@ -73,7 +73,8 @@ function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could chan
     let original = car.color;
     if (selected.style.backgroundColor !== original) selected.style.backgroundColor = original;
     else selected.style.backgroundColor = "black";
-    console.log('Clic al cotxe', car);
+    
+    console.log('Clic al cotxe', car); //we can delete this... was mainly for debugging
 }
 
 function reset(){
