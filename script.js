@@ -63,15 +63,17 @@ function createCar(car){
     //"paint" the car:
     div.style.backgroundColor = car.color;
 
-    div.addEventListener('click', () => selectCar(div, car));
+    div.addEventListener('click', () => selectCar(div, car)); //by now useless... but its cool
 
     return div; //if we dont return, the car isn't created
 }
 
-function selectCar(div, car){
+function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could change car colors... (without having the red option...)
     selected = div;
+    let original = car.color;
+    if (selected.style.backgroundColor !== original) selected.style.backgroundColor = original;
+    else selected.style.backgroundColor = "black";
     console.log('Clic al cotxe', car);
-    selected.style.backgroundColor = "black";
 }
 
 function reset(){
