@@ -65,9 +65,31 @@ function createCar(car){
 
     div.addEventListener('dblclick', () => selectCar(div, car)); //by now quite useless... but its cool
 
-    div.addEventListener('mousedown', () => { //mousedown is like the start of the click...
-        document.addEventListener('mousemove', () => {}); //i dont really know how to do it.. search it
-        document.addEventListener('mouseup', () => {}); //i dont know if div or document
+    div.addEventListener('mousedown', (click) => { //mousedown is like the start of the click...  //click is the var name for what the browser returns when clicking == its position
+        console.log(click); //it can be deleted.. is for knowing the properties
+
+        //where was the mouse when clicking
+        const Xi = click.clientX; //starting mouse X
+        const Yi = click.clientY; //starting mouse Y
+
+        //where was the car when clicking
+        const Li = div.offsetLeft; //starting car left
+        const Ti = div.offsetTop; //starting car top
+        
+
+        function move(mouse){ //i need this functions to be able to remove the listener... //the "mouse" var is the current and moving position of the mouse, to be able to move the div...
+            console.log(mouse); //it can be deleted..
+
+            div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
+            div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
+        }
+        function quit() { //i need this functions to be able to remove the listener...
+            document.removeEventListener('mousemove', move);
+            document.removeEventListener('mouseup', quit);
+        };
+
+        document.addEventListener('mousemove', move); //i dont know if div or document
+        document.addEventListener('mouseup', quit); //i dont know if div or document
     });
 
     return div; //if we dont return, the car isn't created
