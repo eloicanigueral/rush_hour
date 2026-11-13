@@ -38,7 +38,7 @@ const carsHard = [ //it can be changed... is the model like the example implemen
 ];
 
 
-exit = document.createElement('div');
+const exit = document.createElement('div');
 exit.className = "exit"; //no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...
 board.appendChild(exit); 
 
@@ -78,10 +78,8 @@ function createCar(car){
         
 
         function move(mouse){ //i need this functions to be able to remove the listener... //the "mouse" var is the current and moving position of the mouse, to be able to move the div...
-            console.log(mouse); //it can be deleted..
-
-            div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
-            div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
+            if (car.horitzontal) div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
+            else div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
         }
         function quit() { //i need this functions to be able to remove the listener...
             document.removeEventListener('mousemove', move);
