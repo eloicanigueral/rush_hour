@@ -1,6 +1,7 @@
 const board = document.getElementById('board');
 const text = document.getElementById('text');
 const CELL_SIZE = 80;
+const MAX_CELLS = 6; //maximum number of columns/rows == board size
 var selected = null;
 
 // the color of the cars could be random (without the red)??
@@ -47,7 +48,8 @@ function mode(type){
     text.innerText = "Drag the red car trough the exit";
     board.appendChild(exit); //is the exit on the "border"....
 
-    type.forEach(car => board.appendChild(createCar(car)));
+    const level = structuredClone(type); //AI gave us this not to edit the original object/cars
+    level.forEach(car => board.appendChild(createCar(car)));
 }
 
 function createCar(car){
@@ -78,10 +80,26 @@ function createCar(car){
         
 
         function move(mouse){ //i need this functions to be able to remove the listener... //the "mouse" var is the current and moving position of the mouse, to be able to move the div...
-            if (car.horitzontal) div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
-            else div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
+            if (car.horitzontal){
+                div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
+            } 
+            else{
+                div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
+            } 
         }
         function quit() { //i need this functions to be able to remove the listener...
+
+            if (car.horitzontal){ //this if is to drop the car in a cell (in a safe and correct place)... not wherever the user has drop it
+                car.col = Math.round(div.offsetLeft / CELL_SIZE); //in which cell the car is (offsetLeft / cellsize), rounded to get exactly one 
+                div.style.left = car.col * CELL_SIZE + 'px'; //we saved that in car.col to update the car data -> would be easier to check colisions
+                if (car.color === "red" && car.col >= MAX_CELLS){
+                    alert("HAS GUANYAT!");
+                }
+            } else {
+                car.row = Math.round(div.offsetTop / CELL_SIZE); //in which cell the car is (offsetTop / cellsize), rounded to get exactly one
+                div.style.top = car.row * CELL_SIZE + 'px';
+            }
+
             document.removeEventListener('mousemove', move);
             document.removeEventListener('mouseup', quit);
         };

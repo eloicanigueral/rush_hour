@@ -1,4 +1,4 @@
-:root{ --cell-size: 80px; --border: 40px}
+:root{ --cell-size: 80px; --max-cells: 6; --border: 40px}
 
 body{
     display: flex;
@@ -13,8 +13,8 @@ body{
 /* and i suppouse that the "exit" i should put it in the js file?...  */
 #board{
     position: relative;
-    width: calc(var(--cell-size) * 6);
-    height: calc(var(--cell-size) * 6);
+    width: calc(var(--cell-size) * var(--max-cells));
+    height: calc(var(--cell-size) * var(--max-cells));
     border: var(--border) solid #000;
     background-color: #ddd;
     user-select: none; /*because before it used to select the buttons.. know it doesn't selct anything*/
@@ -34,7 +34,7 @@ body{
 
 .exit { /*no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...*/
     position: absolute;
-    left: calc(var(--cell-size)*6);
+    left: calc(var(--cell-size)*var(--max-cells));
     top: calc(var(--cell-size)*2);
     width: var(--border);
     height: var(--cell-size);
