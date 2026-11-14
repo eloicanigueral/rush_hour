@@ -80,13 +80,27 @@ function createCar(car){
         
 
         function move(mouse){ //i need this functions to be able to remove the listener... //the "mouse" var is the current and moving position of the mouse, to be able to move the div...
+
             if (car.horitzontal){
-                div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
+                //div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
+                let x = Li + (mouse.clientX - Xi);
+                if (car.color === "red"){
+                    x = Math.max(0, Math.min(x, (MAX_CELLS)*CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
+                } else {
+                    x = Math.max(0, Math.min(x, (MAX_CELLS - car.length) * CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
+                    
+                }
+                div.style.left = x + 'px';
             } 
             else{
-                div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
+                //div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
+
+                let y = Ti + (mouse.clientY - Yi);
+                y = Math.max(0, Math.min(y, (MAX_CELLS - car.length) * CELL_SIZE));
+                div.style.top = y + 'px';
             } 
         }
+        
         function quit() { //i need this functions to be able to remove the listener...
 
             if (car.horitzontal){ //this if is to drop the car in a cell (in a safe and correct place)... not wherever the user has drop it
