@@ -80,7 +80,8 @@ function createCar(car, level){
         
         const maxX = rightLimit(car, level);
         const minX = leftLimit(car, level); 
-
+        const maxY = bottomLimit(car, level);
+        const minY = topLimit(car, level);
 
         function move(mouse){ //i need this functions to be able to remove the listener... //the "mouse" var is the current and moving position of the mouse, to be able to move the div...
 
@@ -99,7 +100,8 @@ function createCar(car, level){
                 //div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
 
                 let y = Ti + (mouse.clientY - Yi);
-                y = Math.max(0, Math.min(y, (MAX_CELLS - car.length) * CELL_SIZE));
+                //y = Math.max(0, Math.min(y, (MAX_CELLS - car.length) * CELL_SIZE));
+                y = Math.max(minY, Math.min(y, maxY));
                 div.style.top = y + 'px';
             } 
         }
@@ -130,14 +132,26 @@ function createCar(car, level){
 
 function rightLimit(car, level){ //to know the maximum right limit (including walls)
     let col = car.col;
-    while (col + car.length<MAX_CELLS && freeSpace(car.row, col+car.length, car, level)) col++;
-    return col * CELL_SIZE;   // pixels limit
+    while (col+car.length < MAX_CELLS && freeSpace(car.row, col+car.length, car, level)) col++;
+    return col*CELL_SIZE;   // pixels limit
 }
 
 function leftLimit(car, level){ //to know the maximum left limit
     let col = car.col;
     while (col>0 && freeSpace(car.row, col-1, car, level)) col--;
-    return col * CELL_SIZE;
+    return col*CELL_SIZE;
+}
+
+function bottomLimit(car, level){ //to know the maximum bottom limit
+    let row = car.row;
+    while (row+car.length<MAX_CELLS && freeSpace(row+car.length, car.col, car, level)) row++;
+    return row*CELL_SIZE;
+}
+
+function topLimit(car, level){ //to know the maximum top limit (including walls)
+    let row = car.row;
+    while (row>0 && freeSpace(row-1, car.col, car, level)) row--;
+    return row*CELL_SIZE;   // pixels limit
 }
 
 function freeSpace(row, col, car, level){
