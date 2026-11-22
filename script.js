@@ -49,10 +49,10 @@ function mode(type){
     board.appendChild(exit); //is the exit on the "border"....
 
     const level = structuredClone(type); //AI gave us this not to edit the original object/cars
-    level.forEach(car => board.appendChild(createCar(car)));
+    level.forEach(car => board.appendChild(createCar(car, level)));
 }
 
-function createCar(car){
+function createCar(car, level){
     const div = document.createElement('div');
     div.className = 'car'; //not used here in the js, only in the css. The "car"s here are the var entered on the function
 
@@ -78,6 +78,9 @@ function createCar(car){
         const Li = div.offsetLeft; //starting car left
         const Ti = div.offsetTop; //starting car top
         
+        const maxX = rightLimit(car, level);
+        const minX = leftLimit(car, level); 
+
 
         function move(mouse){ //i need this functions to be able to remove the listener... //the "mouse" var is the current and moving position of the mouse, to be able to move the div...
 
@@ -87,8 +90,8 @@ function createCar(car){
                 if (car.color === "red"){
                     x = Math.max(0, Math.min(x, (MAX_CELLS)*CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
                 } else {
-                    x = Math.max(0, Math.min(x, (MAX_CELLS - car.length) * CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
-                    
+                    //x = Math.max(0, Math.min(x, (MAX_CELLS - car.length) * CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
+                    x = Math.max(minX, Math.min(x, maxX));
                 }
                 div.style.left = x + 'px';
             } 
@@ -124,6 +127,35 @@ function createCar(car){
 
     return div; //if we dont return, the car isn't created
 }
+
+function rightLimit(car, level){ //to know the maximum right limit (including walls)
+    let col = car.col;
+    while (col + car.length<MAX_CELLS && freeSpace(car.row, col+car.length, car, level)) col++;
+    return col * CELL_SIZE;   // pixels limit
+}
+
+function leftLimit(car, level){ //to know the maximum left limit
+    let col = car.col;
+    while (col>0 && freeSpace(car.row, col-1, car, level)) col--;
+    return col * CELL_SIZE;
+}
+
+function freeSpace(row, col, car, level){
+    for (const other of level){
+        if (other === car) continue;
+        if (other.horitzontal){
+            if (other.row === row && other.col <= col && col < other.col + other.length) return false;
+        } else {
+            if (other.col === col && other.row <= row && row < other.row + other.length) return false;
+        }
+    }
+    return true;
+}
+
+
+
+//finnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnns qaqui
+
 
 function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could change car colors... (without having the red option...)
     selected = div;
