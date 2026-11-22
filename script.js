@@ -1,6 +1,7 @@
 const board = document.getElementById('board');
 const text = document.getElementById('text');
 const CELL_SIZE = 80;
+const MAX_CELLS = 6; //maximum number of columns/rows == board size
 var selected = null;
 
 // the color of the cars could be random (without the red)??
@@ -47,10 +48,11 @@ function mode(type){
     text.innerText = "Drag the red car trough the exit";
     board.appendChild(exit); //is the exit on the "border"....
 
-    type.forEach(car => board.appendChild(createCar(car)));
+    const level = structuredClone(type); //AI gave us this not to edit the original object/cars
+    level.forEach(car => board.appendChild(createCar(car, level)));
 }
 
-function createCar(car){
+function createCar(car, level){
     const div = document.createElement('div');
     div.className = 'car'; //not used here in the js, only in the css. The "car"s here are the var entered on the function
 
@@ -76,12 +78,44 @@ function createCar(car){
         const Li = div.offsetLeft; //starting car left
         const Ti = div.offsetTop; //starting car top
         
+        const maxX = rightLimit(car, level);
+        const minX = leftLimit(car, level); 
+        const maxY = bottomLimit(car, level);
+        const minY = topLimit(car, level);
 
         function move(mouse){ //i need this functions to be able to remove the listener... //the "mouse" var is the current and moving position of the mouse, to be able to move the div...
-            if (car.horitzontal) div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
-            else div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
+
+            if (car.horitzontal){
+                //div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
+                let x = Li + (mouse.clientX - Xi);
+                //x = Math.max(0, Math.min(x, (MAX_CELLS - car.length) * CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
+                x = Math.max(minX, Math.min(x, maxX));
+                
+                div.style.left = x + 'px';
+            } 
+            else{
+                //div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
+
+                let y = Ti + (mouse.clientY - Yi);
+                //y = Math.max(0, Math.min(y, (MAX_CELLS - car.length) * CELL_SIZE));
+                y = Math.max(minY, Math.min(y, maxY));
+                div.style.top = y + 'px';
+            } 
         }
+        
         function quit() { //i need this functions to be able to remove the listener...
+
+            if (car.horitzontal){ //this if is to drop the car in a cell (in a safe and correct place)... not wherever the user has drop it
+                car.col = Math.round(div.offsetLeft / CELL_SIZE); //in which cell the car is (offsetLeft / cellsize), rounded to get exactly one 
+                div.style.left = car.col * CELL_SIZE + 'px'; //we saved that in car.col to update the car data -> would be easier to check colisions
+                if (car.color === "red" && car.col >= MAX_CELLS-1){
+                    alert("HAS GUANYAT!");
+                }
+            } else {
+                car.row = Math.round(div.offsetTop / CELL_SIZE); //in which cell the car is (offsetTop / cellsize), rounded to get exactly one
+                div.style.top = car.row * CELL_SIZE + 'px';
+            }
+
             document.removeEventListener('mousemove', move);
             document.removeEventListener('mouseup', quit);
         };
@@ -92,6 +126,48 @@ function createCar(car){
 
     return div; //if we dont return, the car isn't created
 }
+
+function rightLimit(car, level){ //to know the maximum right limit (including walls)
+    let col = car.col;
+    while (col+car.length < MAX_CELLS && freeSpace(car.row, col+car.length, car, level)) col++;
+    if (car.color === "red" && col+car.length === MAX_CELLS) col = MAX_CELLS+1; //if its the red, and it can arrive to the "door", it can pass it
+    return col*CELL_SIZE;   // pixels limit
+}
+
+function leftLimit(car, level){ //to know the maximum left limit
+    let col = car.col;
+    while (col>0 && freeSpace(car.row, col-1, car, level)) col--;
+    return col*CELL_SIZE;
+}
+
+function bottomLimit(car, level){ //to know the maximum bottom limit
+    let row = car.row;
+    while (row+car.length<MAX_CELLS && freeSpace(row+car.length, car.col, car, level)) row++;
+    return row*CELL_SIZE;
+}
+
+function topLimit(car, level){ //to know the maximum top limit (including walls)
+    let row = car.row;
+    while (row>0 && freeSpace(row-1, car.col, car, level)) row--;
+    return row*CELL_SIZE;   // pixels limit
+}
+
+function freeSpace(row, col, car, level){
+    for (const other of level){
+        if (other === car) continue;
+        if (other.horitzontal){
+            if (other.row === row && other.col <= col && col < other.col + other.length) return false;
+        } else {
+            if (other.col === col && other.row <= row && row < other.row + other.length) return false;
+        }
+    }
+    return true;
+}
+
+
+
+//finnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnns qaqui
+
 
 function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could change car colors... (without having the red option...)
     selected = div;
