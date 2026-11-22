@@ -88,12 +88,9 @@ function createCar(car, level){
             if (car.horitzontal){
                 //div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
                 let x = Li + (mouse.clientX - Xi);
-                if (car.color === "red"){
-                    x = Math.max(0, Math.min(x, (MAX_CELLS)*CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
-                } else {
-                    //x = Math.max(0, Math.min(x, (MAX_CELLS - car.length) * CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
-                    x = Math.max(minX, Math.min(x, maxX));
-                }
+                //x = Math.max(0, Math.min(x, (MAX_CELLS - car.length) * CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
+                x = Math.max(minX, Math.min(x, maxX));
+                
                 div.style.left = x + 'px';
             } 
             else{
@@ -111,7 +108,7 @@ function createCar(car, level){
             if (car.horitzontal){ //this if is to drop the car in a cell (in a safe and correct place)... not wherever the user has drop it
                 car.col = Math.round(div.offsetLeft / CELL_SIZE); //in which cell the car is (offsetLeft / cellsize), rounded to get exactly one 
                 div.style.left = car.col * CELL_SIZE + 'px'; //we saved that in car.col to update the car data -> would be easier to check colisions
-                if (car.color === "red" && car.col >= MAX_CELLS){
+                if (car.color === "red" && car.col >= MAX_CELLS-1){
                     alert("HAS GUANYAT!");
                 }
             } else {
@@ -133,6 +130,7 @@ function createCar(car, level){
 function rightLimit(car, level){ //to know the maximum right limit (including walls)
     let col = car.col;
     while (col+car.length < MAX_CELLS && freeSpace(car.row, col+car.length, car, level)) col++;
+    if (car.color === "red" && col+car.length === MAX_CELLS) col = MAX_CELLS+1; //if its the red, and it can arrive to the "door", it can pass it
     return col*CELL_SIZE;   // pixels limit
 }
 
