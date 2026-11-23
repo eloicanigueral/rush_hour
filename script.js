@@ -1,4 +1,4 @@
-const board = document.getElementById('board');
+const cars = document.getElementById('cars');
 const text = document.getElementById('text');
 const CELL_SIZE = 80;
 const MAX_CELLS = 6; //maximum number of columns/rows == board size
@@ -39,17 +39,17 @@ const carsHard = [ //it can be changed... is the model like the example implemen
 ];
 
 
-const exit = document.createElement('div');
-exit.className = "exit"; //no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...
-board.appendChild(exit); 
+ const exit = document.createElement('div');
+ exit.className = "exit"; //no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...
+
 
 function mode(type){
-    board.innerHTML = '';
+    cars.innerHTML = '';
     text.innerText = "Drag the red car trough the exit";
-    board.appendChild(exit); //is the exit on the "border"....
+    cars.appendChild(exit); //is the exit on the "border"....
 
     const level = structuredClone(type); //AI gave us this not to edit the original object/cars
-    level.forEach(car => board.appendChild(createCar(car, level)));
+    level.forEach(car => cars.appendChild(createCar(car, level)));
 }
 
 function createCar(car, level){
@@ -170,7 +170,6 @@ function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could chan
 }
 
 function reset(){
-    board.innerHTML = '';
+    cars.innerHTML = '';
     text.innerText = "Choose the level mode:";
-    board.appendChild(exit);
 }

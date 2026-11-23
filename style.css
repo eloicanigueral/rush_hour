@@ -34,8 +34,7 @@ body{
     cursor: pointer;  /*for the cursor to become the hand, saying that the item is clickable*/
 } 
 
-
-.exit { /*no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...*/
+#exit { /*no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...*/
     position: absolute;
     left: calc(var(--cell-size)*var(--max-cells));
     top: calc(var(--cell-size)*2);
