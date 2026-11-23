@@ -1,8 +1,15 @@
 const board = document.getElementById('board');
 const text = document.getElementById('text');
+const moveCounter = document.getElementById('move-counter');
 const CELL_SIZE = 80;
 const MAX_CELLS = 6; //maximum number of columns/rows == board size
 var selected = null;
+let moves = 0;
+
+function setCounter(n) {
+    moves = n;
+    moveCounter.innerText = "Moves: " + moves;
+}
 
 // the color of the cars could be random (without the red)??
 
@@ -44,6 +51,8 @@ exit.className = "exit"; //no m'acaba d agradar.. pq si el vermell canvia d llco
 board.appendChild(exit); 
 
 function mode(type){
+    moves = 0;
+    setCounter(0);
     board.innerHTML = '';
     text.innerText = "Drag the red car trough the exit";
     board.appendChild(exit); //is the exit on the "border"....
@@ -77,6 +86,8 @@ function createCar(car, level){
         //where was the car when clicking
         const Li = div.offsetLeft; //starting car left
         const Ti = div.offsetTop; //starting car top
+        const oldCol = car.col;
+        const oldRow = car.row;
         
         const maxX = rightLimit(car, level);
         const minX = leftLimit(car, level); 
@@ -98,18 +109,22 @@ function createCar(car, level){
         }
         
         function quit() { //i need this functions to be able to remove the listener...
-
             if (car.horitzontal){ //this if is to drop the car in a cell (in a safe and correct place)... not wherever the user has drop it
                 car.col = Math.round(div.offsetLeft / CELL_SIZE); //in which cell the car is (offsetLeft / cellsize), rounded to get exactly one 
                 div.style.left = car.col * CELL_SIZE + 'px'; //we saved that in car.col to update the car data -> would be easier to check colisions
+                if(car.col !== oldCol) setCounter(moves+1);
+
                 if (car.color === "red" && car.col >= MAX_CELLS-1){
-                    alert("YOU WIN!");
+                    alert("YOU WIN! \nYou've made it in " + moves + " moves.");
                     reset();
                 }
             } else {
                 car.row = Math.round(div.offsetTop / CELL_SIZE); //in which cell the car is (offsetTop / cellsize), rounded to get exactly one
                 div.style.top = car.row * CELL_SIZE + 'px';
+                if(car.row !== oldRow) setCounter(moves+1);
             }
+
+            
 
             document.removeEventListener('mousemove', move);
             document.removeEventListener('mouseup', quit);
@@ -170,6 +185,8 @@ function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could chan
 }
 
 function reset(){
+    moves = 0;
+    setCounter(0);
     board.innerHTML = '';
     text.innerText = "Choose the level mode:";
     board.appendChild(exit);
