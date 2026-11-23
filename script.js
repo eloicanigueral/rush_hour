@@ -110,6 +110,7 @@ function createCar(car, level){
                 div.style.left = car.col * CELL_SIZE + 'px'; //we saved that in car.col to update the car data -> would be easier to check colisions
                 if (car.color === "red" && car.col >= MAX_CELLS-1){
                     alert("HAS GUANYAT!");
+                    reset();
                 }
             } else {
                 car.row = Math.round(div.offsetTop / CELL_SIZE); //in which cell the car is (offsetTop / cellsize), rounded to get exactly one
