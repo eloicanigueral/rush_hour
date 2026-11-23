@@ -68,7 +68,7 @@ function createCar(car, level){
     div.addEventListener('dblclick', () => selectCar(div, car)); //by now quite useless... but its cool
 
     div.addEventListener('mousedown', (click) => { //mousedown is like the start of the click...  //click is the var name for what the browser returns when clicking == its position
-        console.log(click); //it can be deleted.. is for knowing the properties
+        //console.log(click); //it can be deleted.. is for knowing the properties
 
         //where was the mouse when clicking
         const Xi = click.clientX; //starting mouse X
@@ -86,18 +86,12 @@ function createCar(car, level){
         function move(mouse){ //i need this functions to be able to remove the listener... //the "mouse" var is the current and moving position of the mouse, to be able to move the div...
 
             if (car.horitzontal){
-                //div.style.left = Li + (mouse.clientX - Xi) + 'px'; //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
-                let x = Li + (mouse.clientX - Xi);
-                //x = Math.max(0, Math.min(x, (MAX_CELLS - car.length) * CELL_SIZE)); //the position is the gratest number beteween the left wall (0), and the right wall (the minumum number between the right wall and the car place)
-                x = Math.max(minX, Math.min(x, maxX));
-                
+                let x = Li + (mouse.clientX - Xi);  //the current X position is, where it started (left side) + where the mouse has moved (== its actual position - where the mouse started (initial position))
+                x = Math.max(minX, Math.min(x, maxX)); //the position is the gratest number beteween the minimum X (wall or car at the left), and the maximum X (the minumum number between the actual position and the next car or wall at the right)
                 div.style.left = x + 'px';
             } 
             else{
-                //div.style.top = Ti + (mouse.clientY - Yi) + 'px'; //same for the vertical axis
-
-                let y = Ti + (mouse.clientY - Yi);
-                //y = Math.max(0, Math.min(y, (MAX_CELLS - car.length) * CELL_SIZE));
+                let y = Ti + (mouse.clientY - Yi); //same for the vertical axis
                 y = Math.max(minY, Math.min(y, maxY));
                 div.style.top = y + 'px';
             } 
@@ -109,7 +103,7 @@ function createCar(car, level){
                 car.col = Math.round(div.offsetLeft / CELL_SIZE); //in which cell the car is (offsetLeft / cellsize), rounded to get exactly one 
                 div.style.left = car.col * CELL_SIZE + 'px'; //we saved that in car.col to update the car data -> would be easier to check colisions
                 if (car.color === "red" && car.col >= MAX_CELLS-1){
-                    alert("HAS GUANYAT!");
+                    alert("YOU WIN!");
                     reset();
                 }
             } else {
@@ -166,17 +160,13 @@ function freeSpace(row, col, car, level){
 }
 
 
-
-//finnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnns qaqui
-
-
 function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could change car colors... (without having the red option...)
     selected = div;
     let original = car.color;
     if (selected.style.backgroundColor !== original) selected.style.backgroundColor = original;
     else selected.style.backgroundColor = "black";
     
-    console.log('Clic al cotxe', car); //we can delete this... was mainly for debugging
+    //console.log('car clicked', car); //we can delete this... was mainly for debugging
 }
 
 function reset(){
