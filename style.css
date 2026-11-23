@@ -1,4 +1,4 @@
-:root{ --cell-size: 80px; --max-cells: 6; --border: 40px}
+:root{ --cell-size: 80px; --max-cells: 6; --border: 40px; --bg-color: #ddd}
 
 body{
     display: flex;
@@ -16,18 +16,21 @@ body{
     width: calc(var(--cell-size) * var(--max-cells));
     height: calc(var(--cell-size) * var(--max-cells));
     border: var(--border) solid #000;
-    background-color: #ddd;
+    background-color: var(--bg-color);
     user-select: none; /*because before it used to select the buttons.. know it doesn't selct anything*/
 }
 
-.car { 
-    position: absolute; 
+
+.car {
+    position: absolute;
     border-radius: 8px; 
-    /* padding: 5px; it doesnt work.. but i should add here a padding or something.... */
+    box-sizing: border-box; /*this way the maximum size is the specified one, and the border goes inside*/
+    border: 2px solid transparent; /*for the "gap", a transparent border*/
+    background-clip: padding-box; /*if i dont put this... the "transparent" border isnt seen*/
     user-select: none; /*because before it used to select the buttons.. know it doesn't selct anything*/
 }
 .car:hover { 
-    outline: 2px solid #000;  /*outline is better than border here, bc it fits in the object size.. not outside, border maked only the bottom and right sides bigger*/
+    border: 2px solid #000;
     cursor: pointer;  /*for the cursor to become the hand, saying that the item is clickable*/
 } 
 
@@ -36,9 +39,9 @@ body{
     position: absolute;
     left: calc(var(--cell-size)*var(--max-cells));
     top: calc(var(--cell-size)*2);
-    width: var(--border);
+    width: var(--border); /*it doesnt fix perfectly.. try to fix it*/
     height: var(--cell-size);
-    background: blue; /*change the color for the background color: #ddd (now its for viewing it)*/
+    background: var(--bg-color); /*change the color for the background color: #ddd (now its for viewing it)*/
 }
 #buttons{
     margin-top: 20px;

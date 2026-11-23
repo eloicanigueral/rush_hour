@@ -57,10 +57,10 @@ function createCar(car, level){
     div.className = 'car'; //not used here in the js, only in the css. The "car"s here are the var entered on the function
 
     //positioning the car by its values:
-    div.style.left = car.col * CELL_SIZE + 'px';
-    div.style.top = car.row * CELL_SIZE + 'px';
-    div.style.width = (car.horitzontal ? car.length : 1) * CELL_SIZE  -4 + 'px';  //the -4 is to ad like a gap between elements.. sure i can put a gap without doing this..., bc it does nothing to the left...
-    div.style.height = (car.horitzontal ? 1 : car.length) * CELL_SIZE -4 + 'px';  //or maybe i can change it in the css adding a border??... not sure
+    div.style.left = car.col*CELL_SIZE + 'px';
+    div.style.top = car.row*CELL_SIZE + 'px';
+    div.style.width = (car.horitzontal ? car.length : 1)*CELL_SIZE + 'px';  //the -4 is to ad like a gap between elements.. sure i can put a gap without doing this..., bc it does nothing to the left...
+    div.style.height = (car.horitzontal ? 1 : car.length)*CELL_SIZE + 'px';  //or maybe i can change it in the css adding a border??... not sure
     
     //"paint" the car:
     div.style.backgroundColor = car.color;
