@@ -9,8 +9,6 @@ body{
     margin: 10px; /* how to center it vertically??*/
 }
 
-/* try to draw here the lines of the cells???? */
-/* and i suppouse that the "exit" i should put it in the js file?...  */
 #board{
     position: relative;
     width: calc(var(--cell-size) * var(--max-cells));
@@ -18,6 +16,11 @@ body{
     border: var(--border) solid #000;
     background-color: var(--bg-color);
     user-select: none; /*because before it used to select the buttons.. know it doesn't selct anything*/
+    
+    background-image: /*AI gave us this to make the grid background*/
+        linear-gradient(#bbb 1px, transparent 1px),
+        linear-gradient(90deg, #bbb 1px, transparent 1px);
+        background-size: var(--cell-size) var(--cell-size);
 }
 
 
@@ -35,11 +38,11 @@ body{
 } 
 
 
-.exit { /*no m'acaba d agradar.. pq si el vermell canvia d llco allo es queda igual.. peroo revisar...*/
+.exit {
     position: absolute;
     left: calc(var(--cell-size)*var(--max-cells));
     top: calc(var(--cell-size)*2);
-    width: var(--border); /*it doesnt fix perfectly.. try to fix it*/
+    width: var(--border);
     height: var(--cell-size);
     background: var(--bg-color); /*change the color for the background color: #ddd (now its for viewing it)*/
 }
