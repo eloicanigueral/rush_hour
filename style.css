@@ -1,4 +1,4 @@
-:root{ --cell-size: 80px; --max-cells: 6; --border: 40px; --bg-color: #ddd}
+:root{ --cell-size: 65px; --max-cells: 6; --border: 40px; --bg-color: #ddd}
 
 body{
     display: flex;
