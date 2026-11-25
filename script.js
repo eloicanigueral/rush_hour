@@ -50,10 +50,10 @@ const exit = document.createElement('div');
 exit.className = "exit";
 board.appendChild(exit); 
 
-function mode(type){
+function mode(type, mode){
     setCounter(0);
     board.innerHTML = '';
-    text.innerHTML = 'Drag the <b style="color: red">red</b> car through the exit';
+    text.innerHTML = '<u><b>' + mode + ' mode</b></u>: Drag the <b style="color: red">red</b> car through the exit';
     board.appendChild(exit); //is the exit on the "border"....
 
     const level = structuredClone(type); //AI gave us this not to edit the original object/cars
