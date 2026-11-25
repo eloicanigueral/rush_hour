@@ -1,6 +1,7 @@
 :root{ --cell-size: 65px; --max-cells: 6; --border: 40px; --bg-color: #ddd}
 
 body{
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
