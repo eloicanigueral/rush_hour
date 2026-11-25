@@ -5,8 +5,8 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    margin: 10px; /* how to center it vertically??*/
+    min-height: 100vh;
+    margin: 0;
 }
 
 #board{
