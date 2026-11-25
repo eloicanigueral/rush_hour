@@ -50,3 +50,13 @@ body{
 #buttons{
     margin-top: 20px;
 }
+
+button {
+    padding: 10px;
+    border: 2px solid #888;
+    border-radius: 8px;
+    background: white;
+    color: #333;
+    cursor: pointer;
+}
+button:hover { background: var(--bg-color); }
