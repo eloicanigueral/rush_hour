@@ -3,7 +3,6 @@ const text = document.getElementById('text');
 const moveCounter = document.getElementById('move-counter');
 const CELL_SIZE = 65;
 const MAX_CELLS = 6; //maximum number of columns/rows == board size
-var selected = null;
 let moves = 0;
 
 function setCounter(n) {
@@ -175,16 +174,14 @@ function freeSpace(row, col, car, level){
 
 
 function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could change car colors... (without having the red option...)
-    selected = div;
     let original = car.color;
-    if (selected.style.backgroundColor !== original) selected.style.backgroundColor = original;
-    else selected.style.backgroundColor = "black";
+    if (div.style.backgroundColor !== original) div.style.backgroundColor = original;
+    else div.style.backgroundColor = "black";
     
     //console.log('car clicked', car); //we can delete this... was mainly for debugging
 }
 
 function reset(){
-    moves = 0;
     setCounter(0);
     board.innerHTML = '';
     text.innerText = "Choose the level mode:";
