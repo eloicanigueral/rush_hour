@@ -1,6 +1,6 @@
 # Rush Hour
 Browser implementation of the Rush Hour sliding puzzle in HTML, CSS and JavaScript.
-
+**Online Version**: Play it here: https://eloicanigueral.github.io/rush_hour/
 
 ### Authors
 - Eloi Cañigueral - u6103316
