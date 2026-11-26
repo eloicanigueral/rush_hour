@@ -44,6 +44,7 @@ const carsHard = [ //it can be changed... is the model like the example implemen
     {row: 1, col: 3, length: 2, horitzontal: false, color: 'green'}
 ];
 
+const COLORS = ['blue', 'green', 'yellow', 'orange', 'purple', 'cyan']; //all colours except the red one, more colors can be added
 
 const exit = document.createElement('div');
 exit.className = "exit";
@@ -72,7 +73,7 @@ function createCar(car, level){
     //"paint" the car:
     div.style.backgroundColor = car.color;
 
-    div.addEventListener('dblclick', () => selectCar(div, car)); //by now quite useless... but its cool
+    div.addEventListener('dblclick', () => changeColor(div, car)); //quite useless... but its cool, to change the color of the cars
 
     div.addEventListener('mousedown', (click) => { //mousedown is like the start of the click...  //click is the var name for what the browser returns when clicking == its position
         //console.log(click); //it can be deleted.. is for knowing the properties
@@ -173,10 +174,9 @@ function freeSpace(row, col, car, level){
 }
 
 
-function selectCar(div, car){ /////////ouuuuuuuuuuuuuu as an extra we could change car colors... (without having the red option...)
-    let original = car.color;
-    if (div.style.backgroundColor !== original) div.style.backgroundColor = original;
-    else div.style.backgroundColor = "black";
+function changeColor(div, car){ //to be able to change car colors... (without having the red option...)
+    if (car.color === "red") return;
+    div.style.backgroundColor = COLORS[Math.floor(Math.random()*COLORS.length)]; //random number between 0 and car_lenght, and then floor for having an exact number of the array
     
     //console.log('car clicked', car); //we can delete this... was mainly for debugging
 }
